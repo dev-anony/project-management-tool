@@ -6,5 +6,8 @@ An open-source trello/JIRA alternative for streamlining the product development 
 - MongoDB (Database)
 - NodeJS (RTE)
 - ExpressJS (Backend)
- 
+- Tailwind (for styling)
+- Deployment (AWS)
+- Docker (for containerization)
+- __ (for testing)
  
