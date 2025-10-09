@@ -9,5 +9,5 @@ An open-source trello/JIRA alternative for streamlining the product development 
 - Tailwind (for styling)
 - Deployment (AWS)
 - Docker (for containerization)
-- __ (for testing)
+- Postman (for testing)
  
