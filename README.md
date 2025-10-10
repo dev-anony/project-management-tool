@@ -10,4 +10,10 @@ An open-source trello/JIRA alternative for streamlining the product development 
 - Deployment (AWS)
 - Docker (for containerization)
 - Postman (for testing)
- 
+
+
+## Tech Features
+- JWT Auth
+- Dashboard (for you section, workspaces, draw.io)
+- Board
+- 
