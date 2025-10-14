@@ -16,3 +16,19 @@ Note: This will impact Vite dev & build performances.
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+## Setting up repo and running the application
+- Clone the Project management repo from github: https://github.com/dev-anony/project-management-tool on your local workspace.
+
+- After cloning run the below command to install node pacakge dependency that is needed for this project
+```npm install 
+
+- Run and test your repo of if it is working properly in web browser at: http://localhost:5174/
+```npm run dev
+
+- build command to rebuild whole repo
+```npm run build
+ 
+
+
