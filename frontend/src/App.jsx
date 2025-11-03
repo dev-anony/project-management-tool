@@ -6,7 +6,7 @@ import { DndContext, useDraggable } from '@dnd-kit/core'
 
 function DraggableButton({ count, setCount }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: 'count-button',
+    id: 'draggable',
   })
 
   const [isDragging, setIsDragging] = useState(false);
@@ -33,7 +33,7 @@ function DraggableButton({ count, setCount }) {
     const distance = Math.hypot(e.clientX - x, e.clientY - y);
 
     setIsDragging(false);
-    if (distance < 5) {
+    if (distance < 1) {
       setCount((count) => count + 1);
     }
   };
@@ -42,7 +42,6 @@ function DraggableButton({ count, setCount }) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      onClick={() => setCount((c) => c + 1)}
       style={style}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
