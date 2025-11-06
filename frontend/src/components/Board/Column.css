@@ -1,0 +1,35 @@
+.column {
+  width: 280px;
+  min-height: 300px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.column--over {
+  background-color: #e6f0ff;
+  border-color: #4a90e2;
+}
+
+.column__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.column__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 200px;
+}
+
+.column__placeholder {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}

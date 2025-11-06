@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react'
 import { useDraggable } from '@dnd-kit/core'
 
-function DraggableButton({ count, setCount }) {
+function DraggableCard() {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'draggable',
   })
+
+  const [count, setCount] = useState(0);
 
   const [isDragging, setIsDragging] = useState(false);
   const dragStartPos = useRef({x: 0, y: 0});
@@ -14,10 +16,9 @@ function DraggableButton({ count, setCount }) {
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
     cursor: isDragging ? 'grabbing' : 'grab',
-    position: 'fixed', // change to fixed for full-page dragging
-    top: '60%',
-    left: '50%',
-    zIndex: 9999,
+    backgroundColor: '#c52222ff',
+    padding: '10px',
+    border: '1px solid #219aacff',
   }
 
   const handleMouseDown = (e) => {console.log('Mouse down', e);
@@ -48,4 +49,4 @@ function DraggableButton({ count, setCount }) {
   )
 }
 
-export default DraggableButton
+export default DraggableCard
