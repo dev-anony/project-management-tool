@@ -38,7 +38,7 @@ function DraggableButton({ count, setCount }) {
     }
   };
   return (
-    <button
+    <div className='d'
       ref={setNodeRef}
       {...listeners}
       {...attributes}
@@ -47,7 +47,7 @@ function DraggableButton({ count, setCount }) {
       onMouseUp={handleMouseUp}
     >
       count is {count}
-    </button>
+    </div>
   )
 }
 
