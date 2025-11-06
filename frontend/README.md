@@ -51,4 +51,8 @@ If you are developing a production application, we recommend using TypeScript wi
    npm run build
 ``` 
 
+```Utilities and modification
+   use @import tailwindcss to import tailwindcss features in your functionality
+``` 
+
 
