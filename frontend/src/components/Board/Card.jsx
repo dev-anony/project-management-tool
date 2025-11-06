@@ -1,0 +1,51 @@
+import React, { useState, useRef } from 'react'
+import { useDraggable } from '@dnd-kit/core'
+
+function DraggableButton({ count, setCount }) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: 'draggable',
+  })
+
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartPos = useRef({x: 0, y: 0});
+
+  const style = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : undefined,
+    cursor: isDragging ? 'grabbing' : 'grab',
+    position: 'fixed', // change to fixed for full-page dragging
+    top: '60%',
+    left: '50%',
+    zIndex: 9999,
+  }
+
+  const handleMouseDown = (e) => {console.log('Mouse down', e);
+    setIsDragging(true);
+    dragStartPos.current = {x: e.clientX, y: e.clientY};
+  };
+
+  const handleMouseUp = (e) => {
+    const {x, y} = dragStartPos.current;
+    const distance = Math.hypot(e.clientX - x, e.clientY - y);
+
+    setIsDragging(false);
+    if (distance < 1) {
+      setCount((count) => count + 1);
+    }
+  };
+  return (
+    <div className='d'
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
+      count is {count}
+    </div>
+  )
+}
+
+export default DraggableButton
