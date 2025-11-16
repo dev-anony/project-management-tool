@@ -37,11 +37,9 @@ const ColumnContainer = ({
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-columnBackgroundColor
-        w-[350px] h-[500px]
-        border-2 border-rose-500
-        max-h-[500px] rounded-md
-        flex flex-col"
+        className="bg-mainBackgroundColor opacity-50 p-2.5 w-[250px] h-[350px]
+        items-center flex flex-left rounded-xl border-2
+        border-rose-500 cursor-grab relative"
       ></div>
     );
   }
@@ -50,10 +48,7 @@ const ColumnContainer = ({
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-columnBackgroundColor
-      w-[350px] h-[500px]
-      max-h-[500px] rounded-md
-      flex flex-col"
+      class="bg-columnBackgroundColor w-[250px] h-[350px] rounded-md flex flex-col min-h-0"
     >
       {/* Column Title */}
       <div
@@ -62,23 +57,16 @@ const ColumnContainer = ({
         onClick={() => {
           setEditMode(true);
         }}
-        className="bg-mainBackgroundColor
+        class="bg-mainBackgroundColor
         text-md font-bold
-        h-[60px] p-3    
+        h-[50px] p-3    
         cursor-grab
         rounded-b-none
-        border-columnBackgroundColor border-4
-        flex items-center justify-between"
+        border-columnBackgroundColor
+        flex items-center justify-between
+        rounded-lg bg-[#ffffff35] p-4"
       >
         <div className="flex gap-2">
-          <div
-            className="flex
-            justify-center items-center
-            bg-columnBackgroundColor
-            px-2.5 py-1 text-sm rounded-full"
-          >
-            1
-          </div>
           {!editMode && column.title}
           {editMode && (
             <input
@@ -102,7 +90,7 @@ const ColumnContainer = ({
           }}
           className="stroke-gray-500
           hover:stroke-white
-          hover:bg-columnBackgroundColor
+          ring-rose-500 hover:ring-2
           rounded py-2 px-2"
         >
           <TrashIcon />
@@ -110,7 +98,7 @@ const ColumnContainer = ({
       </div>
 
       {/* Column Task Container */}
-      <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+      <div class="flex-1 min-h-8 rounded-md border-black bg-[#00000073] border-1 flex-col gap-4 p-1 overflow-y-auto">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -130,8 +118,8 @@ const ColumnContainer = ({
         }}
         className="flex gap-2 items-center
         border-columnBackgroundColor border-2 rounded-md p-2
-        hover:bg-mainBackgroundColor hover:text-rose-500
-        active:bg-black"
+        ring-rose-500 hover:ring-2
+        bg-[#ffffff35]"
       >
         <PlusIcon />
         Add Task

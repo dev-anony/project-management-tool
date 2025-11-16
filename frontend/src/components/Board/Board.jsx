@@ -140,22 +140,15 @@ const KanbanBoard = () => {
   }
 
   return (
-    <div
-      className="m-auto flex
-        min-h-screen
-        w-full items-center
-        overflow-x-auto
-        overflow-y-hidden
-        px-[40px]"
-    >
+    <div className="flex flex-col h-full">
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="m-auto flex gap-4">
-          <div className="flex gap-4">
+        <div className="flex gap-6 h-full items-center">
+          <div className="flex gap-4 items-start">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
                 <ColumnContainer
@@ -174,14 +167,12 @@ const KanbanBoard = () => {
 
           <button
             onClick={createNewColumn}
-            className="w-[350px] min-w-[350px]
-              cursor-pointer rounded-lg
-              bg-mainBackgroundColor
-              border-2 border-columnBackgroundColor
-              p-4 ring-rose-500 hover:ring-2
-              flex gap-2"
+            class="min-w-[200px] h-[250px] flex items-center 
+            justify-center gap-2 
+            bg-[#8484843a] text-white rounded-md 
+            border-2 border-columnBackgroundColor ring-rose-500 hover:ring-2 cursor-pointer"
           >
-            <PlusIcon />
+          <PlusIcon />
             Add Column
           </button>
         </div>
