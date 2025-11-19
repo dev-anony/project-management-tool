@@ -167,10 +167,9 @@ const KanbanBoard = () => {
 
           <button
             onClick={createNewColumn}
-            class="min-w-[200px] h-[250px] flex items-center 
-            justify-center gap-2 
-            bg-[#8484843a] text-white rounded-md 
-            border-2 border-columnBackgroundColor ring-rose-500 hover:ring-2 cursor-pointer"
+            className="min-w-[200px] h-[250px] flex items-center 
+            justify-center gap-2  text-black rounded 
+            border-2 ring-indigo-500 hover:ring-2 cursor-pointer"
           >
           <PlusIcon />
             Add Column

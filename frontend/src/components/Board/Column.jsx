@@ -38,7 +38,7 @@ const ColumnContainer = ({
         ref={setNodeRef}
         style={style}
         className="bg-mainBackgroundColor opacity-50 p-2.5 w-[250px] h-[350px]
-        items-center flex flex-left rounded-xl border-2
+        items-center flex flex-left rounded border-2
         border-rose-500 cursor-grab relative"
       ></div>
     );
@@ -48,8 +48,10 @@ const ColumnContainer = ({
     <div
       ref={setNodeRef}
       style={style}
-      class="bg-columnBackgroundColor w-[250px] h-[350px] rounded-md flex flex-col min-h-0"
+      className="bg-columnBackgroundColor w-[250px] h-[350px] 
+      rounded flex flex-col min-h-0"
     >
+      {/* height issue above (max-h-[350px]) while dragging */}
       {/* Column Title */}
       <div
         {...attributes}
@@ -57,21 +59,23 @@ const ColumnContainer = ({
         onClick={() => {
           setEditMode(true);
         }}
-        class="bg-mainBackgroundColor
+        style={{
+          border: editMode ? "2px solid #4F46E5" : "",
+        }}
+        className="bg-mainBackgroundColor
         text-md font-bold
         h-[50px] p-3    
         cursor-grab
-        rounded-b-none
         border-columnBackgroundColor
         flex items-center justify-between
-        rounded-lg bg-[#ffffff35] p-4"
+        rounded bg-[#cccccc3a] p-4"
       >
-        <div className="flex gap-2">
+        <div>
           {!editMode && column.title}
           {editMode && (
             <input
               autoFocus
-              className="bg-black focus:border-rose-500 border rounded outline-none px-2"
+              className=" w-[170px] outline-none rounded"
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
               onBlur={() => {
@@ -98,7 +102,7 @@ const ColumnContainer = ({
       </div>
 
       {/* Column Task Container */}
-      <div class="flex-1 min-h-8 rounded-md border-black bg-[#00000073] border-1 flex-col gap-4 p-1 overflow-y-auto">
+      <div className="flex-1 min-h-8 bg-[#9d9c9c3a] flex-col gap-4 p-1 overflow-y-auto">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -116,10 +120,9 @@ const ColumnContainer = ({
         onClick={() => {
           createTask(column.id);
         }}
-        className="flex gap-2 items-center
-        border-columnBackgroundColor border-2 rounded-md p-2
-        ring-rose-500 hover:ring-2
-        bg-[#ffffff35]"
+        className="flex  border-2
+        ring-indigo-500 rounded hover:ring-1
+        bg-[#ffffff]"
       >
         <PlusIcon />
         Add Task

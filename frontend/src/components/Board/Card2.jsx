@@ -76,9 +76,9 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
       {...listeners}
       ref={setNodeRef}
       style={style}
-      className="bg-[#3b39393a] p-2.5 h-[50px]
+      className="bg-[#cccccc3a] p-2.5 h-[50px]
        items-center flex flex-left rounded-md
-      hover:ring-2 hover:ring-inset hover:ring-rose-500
+      hover:ring-2 hover:ring-inset hover:ring-indigo-500
       cursor-grab relative"
     >
       <p
