@@ -102,7 +102,7 @@ const ColumnContainer = ({
       </div>
 
       {/* Column Task Container */}
-      <div className="flex-1 min-h-8 bg-[#9d9c9c3a] flex-col gap-4 p-1 overflow-y-auto">
+      <div className="flex-1 min-h-8 bg-[#cccccc3a] flex-col gap-4 p-3 overflow-y-auto">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -123,7 +123,7 @@ const ColumnContainer = ({
         className="flex  border-2
         ring-indigo-500 rounded hover:ring-1
         bg-[#ffffff]"
-      >
+      > 
         <PlusIcon />
         Add Task
       </button>
