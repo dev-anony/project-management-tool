@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import PlusIcon from "../../utils/PlusIcon";
 import ColumnContainer from "./Column";
 import {
@@ -106,40 +106,41 @@ const KanbanBoard = () => {
     });
   }
 
-  const debouncedOnDragOver = useCallback(
-    debounce((event) =>{
-      const { active, over } = event;
-      if (!over) return;
+  const debouncedOnDragOver = useMemo(
+    () =>
+      debounce((event) => {
+        const { active, over } = event;
+        if (!over) return;
 
-      const activeId = active.id;
-      const overId = over.id;
-      if (activeId === overId) return;
+        const activeId = active.id;
+        const overId = over.id;
+        if (activeId === overId) return;
 
-      const isActiveATask = active.data.current?.type === "Task";
-      const isOverATask = over.data.current?.type === "Task";
-      const isOverAColumn = over.data.current?.type === "Column";
+        const isActiveATask = active.data.current?.type === "Task";
+        const isOverATask = over.data.current?.type === "Task";
+        const isOverAColumn = over.data.current?.type === "Column";
 
-      if (!isActiveATask) return;
+        if (!isActiveATask) return;
 
-      // Dropping a task over another task
-      if (isActiveATask && isOverATask) {
-        setTasks((tasks) => {
-          const activeIndex = tasks.findIndex((t) => t.id === activeId);
-          const overIndex = tasks.findIndex((t) => t.id === overId);
-          tasks[activeIndex].columnId = tasks[overIndex].columnId;
-          return arrayMove(tasks, activeIndex, overIndex);
-        });
-      }
+        // Dropping a task over another task
+        if (isActiveATask && isOverATask) {
+          setTasks((tasks) => {
+            const activeIndex = tasks.findIndex((t) => t.id === activeId);
+            const overIndex = tasks.findIndex((t) => t.id === overId);
+            tasks[activeIndex].columnId = tasks[overIndex].columnId;
+            return arrayMove(tasks, activeIndex, overIndex);
+          });
+        }
 
-      // Dropping a task over a column
-      if (isActiveATask && isOverAColumn) {
-        setTasks((tasks) => {
-          const activeIndex = tasks.findIndex((t) => t.id === activeId);
-          tasks[activeIndex].columnId = overId;
-          return arrayMove(tasks, activeIndex, activeIndex);
-        });
-      }
-    }, 100),
+        // Dropping a task over a column
+        if (isActiveATask && isOverAColumn) {
+          setTasks((tasks) => {
+            const activeIndex = tasks.findIndex((t) => t.id === activeId);
+            tasks[activeIndex].columnId = overId;
+            return arrayMove(tasks, activeIndex, activeIndex);
+          });
+        }
+      }, 100),
     [],
   );
 
