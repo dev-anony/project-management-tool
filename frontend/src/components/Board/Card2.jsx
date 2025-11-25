@@ -4,7 +4,6 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
 
 const TaskCard = ({ task, deleteTask, updateTask }) => {
-  const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
@@ -28,9 +27,9 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-mainBackgroundColor opacity-30 p-2.5 h-[100px]
-        min-h-[100px] items-center flex flex-left rounded-xl border-2
-        border-rose-500 cursor-grab relative"
+        className="bg-mainBackgroundColor opacity-30 p-2.5 h-[60px] 
+        flex-right rounded
+        cursor-grab relative"
       />
     );
   }
@@ -42,14 +41,13 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         {...listeners}
         ref={setNodeRef}
         style={style}
-        className="bg-mainBackgroundColor p-2.5 h-[100px]
-        min-h-[100px] items-center flex flex-left rounded-xl
-        hover:ring-2 hover:ring-inset hover:ring-rose-500
-        cursor-grab relative task"
+        className="bg-mainBackgroundColor p-2.5 h-[60px]
+        rounded border-black-2
+        cursor-grab relative"
       >
         <textarea
-          className="h-[90%] w-full resize-none border-none rounded
-          bg-transparent text-white focus:outline-none"
+          className="w-full resize-none border-none rounded
+          bg-transparent text-black focus:outline-none"
           value={task.content}
           autoFocus
           placeholder="Task content here"
@@ -66,19 +64,12 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
   return (
     <div
       onClick={toggleEditMode}
-      onMouseEnter={() => {
-        setMouseIsOver(true);
-      }}
-      onMouseLeave={() => {
-        setMouseIsOver(false);
-      }}
       {...attributes}
       {...listeners}
       ref={setNodeRef}
       style={style}
-      className="bg-[#cccccc3a] p-2.5 h-[50px]
-       items-center flex flex-left rounded-md
-      hover:ring-2 hover:ring-inset hover:ring-indigo-500
+      className="bg-[#ffffff] p-2.5 h-[70px]
+      flex flex-left rounded text-left
       cursor-grab relative"
     >
       <p
@@ -88,7 +79,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         {" "}
         {task.content}
       </p>
-      {mouseIsOver && (
+      {/*mouseIsOver && (
         <button
           onClick={() => {
             deleteTask(task.id);
@@ -98,7 +89,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         >
           <TrashIcon />
         </button>
-      )}
+      )*/}
     </div>
   );
 };

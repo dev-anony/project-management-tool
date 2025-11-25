@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import TrashIcon from "../../utils/TrashIcon";
 import { useSortable, SortableContext } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useDroppable } from "@dnd-kit/core";
 import PlusIcon from "../../utils/PlusIcon";
 import TaskCard from "./Card2";
 
@@ -15,6 +16,7 @@ const ColumnContainer = ({
   updateTask,
 }) => {
   const [editMode, setEditMode] = useState(false);
+  const [mouseIsOver, setMouseIsOver] = useState(false);
 
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
@@ -26,6 +28,11 @@ const ColumnContainer = ({
       data: { type: "Column", column },
       disabled: editMode,
     });
+
+  const { setNodeRef: setDroppableNodeRef } = useDroppable({
+    id: `column-content-${column.id}`,
+    data: { type: "ColumnContent", column },
+  });
 
   const style = {
     transition,
@@ -63,8 +70,8 @@ const ColumnContainer = ({
           border: editMode ? "2px solid #4F46E5" : "",
         }}
         className="bg-mainBackgroundColor
-        text-md font-bold
-        h-[50px] p-3    
+        text-md font-semibold
+        h-[50px]   
         cursor-grab
         border-columnBackgroundColor
         flex items-center justify-between
@@ -102,7 +109,19 @@ const ColumnContainer = ({
       </div>
 
       {/* Column Task Container */}
-      <div className="flex-1 min-h-8 bg-[#cccccc3a] flex-col gap-4 p-3 overflow-y-auto">
+      {/*fix min-height issue when no tasks*/}
+      <div 
+      ref={setDroppableNodeRef}
+      className="flex-1 min-h-8 bg-[#cccccc3a]
+      flex-col p-3 overflow-y-auto no-scrollbar
+      scroll-smooth space-y-2"
+      onMouseEnter={() => {
+        setMouseIsOver(true);
+      }}
+      onMouseLeave={() => {
+        setMouseIsOver(false);
+      }} 
+      >
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -117,16 +136,26 @@ const ColumnContainer = ({
 
       {/* Column Footer */}
       <button
-        onClick={() => {
-          createTask(column.id);
-        }}
-        className="flex  border-2
-        ring-indigo-500 rounded hover:ring-1
-        bg-[#ffffff]"
-      > 
-        <PlusIcon />
-        Add Task
-      </button>
+          onClick={() => {
+            createTask(column.id);
+          }}
+          onMouseEnter={() => {
+            setMouseIsOver(true);
+          }}
+          onMouseLeave={() => {
+            setMouseIsOver(false);
+          }}
+          className="flex ring-white
+          rounded font-normal
+          bg-[#ffffff]"
+        > 
+        <span className={`flex items-center gap-2 transition-opacity duration-150 ${
+          mouseIsOver ? "opacity-100" : "opacity-0"
+        }`}>
+          <PlusIcon />
+          Add Task
+        </span>
+        </button>
     </div>
   );
 };

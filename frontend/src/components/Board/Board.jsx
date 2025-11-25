@@ -95,15 +95,21 @@ const KanbanBoard = () => {
     const { active, over } = event;
     if (!over) return;
 
-    const activeColumnId = active.id;
-    const overColumnId = over.id;
-    if (activeColumnId === overColumnId) return;
+    // Only reorder columns when both active and over are columns
+    if (
+      active.data.current?.type === "Column" &&
+      over.data.current?.type === "Column"
+    ) {
+      const activeColumnId = active.id;
+      const overColumnId = over.id;
+      if (activeColumnId === overColumnId) return;
 
-    setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex((col) => col.id === activeColumnId);
-      const overColumnIndex = columns.findIndex((col) => col.id === overColumnId);
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    });
+      setColumns((columns) => {
+        const activeColumnIndex = columns.findIndex((col) => col.id === activeColumnId);
+        const overColumnIndex = columns.findIndex((col) => col.id === overColumnId);
+        return arrayMove(columns, activeColumnIndex, overColumnIndex);
+      });
+    }
   }
 
   const debouncedOnDragOver = useMemo(
@@ -118,7 +124,7 @@ const KanbanBoard = () => {
 
         const isActiveATask = active.data.current?.type === "Task";
         const isOverATask = over.data.current?.type === "Task";
-        const isOverAColumn = over.data.current?.type === "Column";
+        const isOverAColumn = over.data.current?.type === "ColumnContent";
 
         if (!isActiveATask) return;
 
@@ -136,11 +142,15 @@ const KanbanBoard = () => {
         if (isActiveATask && isOverAColumn) {
           setTasks((tasks) => {
             const activeIndex = tasks.findIndex((t) => t.id === activeId);
-            tasks[activeIndex].columnId = overId;
+            // overId is droppable id for column content, read column id from over.data
+            const targetColumnId = over.data.current?.column?.id ?? null;
+            if (targetColumnId) {
+              tasks[activeIndex].columnId = targetColumnId;
+            }
             return arrayMove(tasks, activeIndex, activeIndex);
           });
         }
-      }, 100),
+      }, 20),
     [],
   );
 
@@ -177,8 +187,8 @@ const KanbanBoard = () => {
           <button
             onClick={createNewColumn}
             className="min-w-[200px] h-[250px] flex items-center 
-            justify-center gap-2  text-black rounded 
-            border-2 ring-indigo-500 hover:ring-2 cursor-pointer"
+            justify-center gap-2  text-black rounded font-semibold
+            ring-indigo-500 hover:ring-2 cursor-pointer"
           >
           <PlusIcon />
             Add Column
