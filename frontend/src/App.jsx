@@ -1,11 +1,10 @@
 import './App.css'
-import KanbanBoard from './components/Board/Board.jsx'
-import Board from './pages/BoardPage.jsx'
+import Board from './pages/BoardPage2.jsx'
 
 function App() {
   return (
     <>
-    <KanbanBoard/>
+    <Board/>
     </>
   )
 }

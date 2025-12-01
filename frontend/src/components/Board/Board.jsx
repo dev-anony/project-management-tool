@@ -159,7 +159,9 @@ const KanbanBoard = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="ml-5 flex flex-col h-full 
+    position-relative flex-1 overflow-auto pr-6 pl-6 pt-2
+    pb-40 items-start no-scrollbar">
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
