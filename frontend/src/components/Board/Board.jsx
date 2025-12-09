@@ -27,6 +27,8 @@ const KanbanBoard = () => {
     })
   );
 
+  // ID for each Column and Task will be unique for both.
+
   const generateId = (() => {
   const used = new Set();
 
@@ -41,6 +43,7 @@ const KanbanBoard = () => {
   };
 })();
 
+  //create New, Delete, Update column
 
   function createNewColumn() {
     const id = generateId();
@@ -68,6 +71,8 @@ const KanbanBoard = () => {
     setColumns(newColumns);
   }
 
+  //Create, Delete, Update Task
+
   function createTask(columnId) {
     const id = generateId();
 
@@ -91,6 +96,8 @@ const KanbanBoard = () => {
     });
     setTasks(newTasks);
   }
+
+  //DND Handlers
 
   function onDragStart(event) {
     if (event.active.data.current?.type === "Column") {
@@ -126,6 +133,8 @@ const KanbanBoard = () => {
       });
     }
   }
+
+  //Debounced onDragOver handler to improve performance
 
   const debouncedOnDragOver = useMemo(
     () =>

@@ -18,6 +18,8 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
     transform: CSS.Transform.toString(transform),
   };
 
+  //Edit mode toggle for the task card
+
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
   };

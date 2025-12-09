@@ -21,6 +21,8 @@ function DraggableCard() {
     border: '1px solid #219aacff',
   }
 
+  // Mouse down and up handler
+
   const handleMouseDown = (e) => {console.log('Mouse down', e);
     setIsDragging(true);
     dragStartPos.current = {x: e.clientX, y: e.clientY};

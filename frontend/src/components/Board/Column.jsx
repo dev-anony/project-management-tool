@@ -18,6 +18,8 @@ const ColumnContainer = ({
   const [editMode, setEditMode] = useState(false);
   const [mouseIsOver, setMouseIsOver] = useState(false);
 
+  // Memoize task IDs for SortableContext
+
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);
@@ -28,6 +30,8 @@ const ColumnContainer = ({
       data: { type: "Column", column },
       disabled: editMode,
     });
+
+    // Droppable area for tasks within the column
 
   const { setNodeRef: setDroppableNodeRef } = useDroppable({
     id: `column-content-${column.id}`,
