@@ -27,14 +27,27 @@ const KanbanBoard = () => {
     })
   );
 
-  function generateId() {
-    return Math.floor(Math.random() * 1000) + 1;
-  }
+  const generateId = (() => {
+  const used = new Set();
+
+  return function() {
+    let id;
+    do {
+      id = Math.floor(Math.random() * 1000) + 1;
+    } while (used.has(id));
+
+    used.add(id);
+    return id;
+  };
+})();
+
 
   function createNewColumn() {
+    const id = generateId();
+    
     const columnToAdd = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
+      id,
+      title: `[${id}] Column ${columns.length + 1}`,
     };
     setColumns([...columns, columnToAdd]);
   }
@@ -56,10 +69,12 @@ const KanbanBoard = () => {
   }
 
   function createTask(columnId) {
+    const id = generateId();
+
     const newTask = {
-      id: generateId(),
+      id,
       columnId,
-      content: `Task ${tasks.length + 1}`,
+      content: `[${id}] Task ${tasks.length + 1}`,
     };
     setTasks([...tasks, newTask]);
   }
