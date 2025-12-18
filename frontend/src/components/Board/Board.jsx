@@ -45,12 +45,15 @@ const KanbanBoard = () => {
 
   //create New, Delete, Update column
 
+  function addNewColumn() {
+  };
+
   function createNewColumn() {
     const id = generateId();
     
     const columnToAdd = {
       id,
-      title: `[${id}] Column ${columns.length + 1}`,
+      title: `[${id}] ${columns.length + 1}`,
     };
     setColumns([...columns, columnToAdd]);
   }
@@ -217,7 +220,7 @@ const KanbanBoard = () => {
             ring-indigo-500 hover:ring-2 cursor-pointer"
           >
           <PlusIcon />
-            Add Column
+            Add New List
           </button>
         </div>
 
