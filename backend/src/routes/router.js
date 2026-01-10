@@ -1,9 +1,9 @@
 import express from 'express';
-import { getHandler, postHandler, putHandler, deleteHandler } from '../controllers/controller.js';
+import { getTask, createTask, putHandler, deleteHandler } from '../controllers/controller.js';
 const router = express.Router();
 
-router.get('/', getHandler);
-router.post('/', postHandler);
+router.get('/', getTask);
+router.post('/', createTask);
 router.put('/', putHandler);
 router.delete('/', deleteHandler);
 
