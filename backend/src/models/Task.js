@@ -6,13 +6,29 @@ const taskSchema = new mongoose.Schema(
         type: String,
         required: true,
     },
-    content: {
+    taskId: {
         type: String,
         required: true,
     },
     completed: {
         type: Boolean,
         default: false,
+    },
+    storyPoints: {
+        type: Number,
+        default: 0,
+    },
+    startDate: {
+        type: Date,
+    },
+    dueDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date,
+    },
+    developer: {
+        type: String,
     },
   },
   {
