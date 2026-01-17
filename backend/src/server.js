@@ -8,7 +8,10 @@ dotenv.config();
 const app = express();
 connectDB();
 
+//middleware for CORS
+
 app.use(express.json());
+
 app.use("/api", router);
 
 app.listen(5000, () => {

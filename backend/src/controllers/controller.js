@@ -12,8 +12,9 @@ export async function getTask(req, res) {
 
 export async function createTask(req, res) {
     try {
-        const {title, content} = req.body;
-        const newTask = new Task({title, content});
+        const {title, taskId, completed, storyPoints, startDate, dueDate, endDate, developer} = req.body;
+        const newTask = new Task({title, taskId, completed, storyPoints, startDate, dueDate, endDate, developer});
+        
         await newTask.save();
         res.status(201).json(newTask);
     } catch (error) {
@@ -22,10 +23,22 @@ export async function createTask(req, res) {
     }
 }
 
-export function putHandler(req, res) {
-    res.status(200).json({ message: "this is put api endpoint" });
+export async function putHandler(req, res) {
+    try {
+        const { title, completed, storyPoints, startDate, dueDate, endDate, developer } = req.body;
+        const updatedTask = await Task.findByIdAndUpdate(req.params.id, { title, completed, storyPoints, startDate, dueDate, endDate, developer }, { new: true });
+        
+        res.status(200).json(updatedTask);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating task", error });
+    }
 }
 
-export function deleteHandler(req, res) {
-    res.status(200).json({ message: "this is delete api endpoint" });
+export async function deleteHandler(req, res) {
+    try {
+        const deletedTask = await Task.findByIdAndDelete(req.params.id);
+        res.status(200).json(deletedTask);
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting task", error });
+    }
 }
