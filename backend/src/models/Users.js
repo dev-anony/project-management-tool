@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const devSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
         type: String,
@@ -9,7 +9,6 @@ const devSchema = new mongoose.Schema(
     devId: {
         type: String,
         required: true,
-        unique: true,
     },
     team: {
         type: String,
@@ -17,5 +16,5 @@ const devSchema = new mongoose.Schema(
 },
 );
 
-const Dev = mongoose.model("Dev", devSchema);
-export default Dev;
+const User = mongoose.model("User", userSchema);
+export default User;
