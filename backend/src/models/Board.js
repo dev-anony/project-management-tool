@@ -16,6 +16,7 @@ const boardSchema = new mongoose.Schema(
         required: true,
     },
   },
+  { timestamps: true }
 );
 
 const Board = mongoose.model("Board", boardSchema);
