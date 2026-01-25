@@ -14,7 +14,7 @@ app.use((req, res, next) => {
     console.log(`${req.socket.remoteAddress}`);
     console.log("Headers:", req.headers);
     next();
-});
+}); 
 
 //middleware to parse JSON bodies
 app.use(express.json());
