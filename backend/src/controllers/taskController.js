@@ -23,7 +23,7 @@ export async function createTask(req, res) {
     }
 }
 
-export async function putHandler(req, res) {
+export async function updateTask(req, res) {
     try {
         const { title, completed, storyPoints, startDate, dueDate, endDate, developer } = req.body;
         const updatedTask = await Task.findByIdAndUpdate(req.params.id, { title, completed, storyPoints, startDate, dueDate, endDate, developer }, { new: true });
@@ -34,7 +34,7 @@ export async function putHandler(req, res) {
     }
 }
 
-export async function deleteHandler(req, res) {
+export async function deleteTask(req, res) {
     try {
         const deletedTask = await Task.findByIdAndDelete(req.params.id);
         res.status(200).json(deletedTask);

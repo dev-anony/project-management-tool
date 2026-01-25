@@ -1,10 +1,17 @@
 import express from 'express';
-import { getTask, createTask, putHandler, deleteHandler } from '../controllers/controller.js';
+import { getTask, createTask, updateTask, deleteTask } from '../controllers/taskController.js';
+import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/adminController.js';
+
 const router = express.Router();
 
-router.get('/', getTask);
-router.post('/', createTask);
-router.put('/:id', putHandler);
-router.delete('/:id', deleteHandler);
+router.get('/tasks', getTask);
+router.post('/tasks', createTask);
+router.put('/tasks/:id', updateTask);
+router.delete('/tasks/:id', deleteTask);
+
+router.get('/admins', getAdmins);
+router.post('/admins', createAdmin);
+router.put('/admins/:id', updateAdmin);
+router.delete('/admins/:id', deleteAdmin);
 
 export default router;
