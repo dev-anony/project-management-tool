@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+/*
+board:
+{
+  id: "insert here",
+  name : "Nishant",
+  dev: ["dev id"]
+  col: [colid,colid]
+}
+*/
+
 const boardSchema = new mongoose.Schema(
   {
     boardName: {
@@ -21,3 +31,4 @@ const boardSchema = new mongoose.Schema(
 
 const Board = mongoose.model("Board", boardSchema);
 export default Board;
+
