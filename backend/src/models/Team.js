@@ -7,8 +7,13 @@ const teamSchema = new mongoose.Schema(
         required: true,
     },
     dev: {
-        type: [String],
-        required: true,
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],  
+        default: []
     },
     col: {
         type: [String],
