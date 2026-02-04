@@ -1,18 +1,19 @@
 import express from 'express';
-import { getTask, createTask, updateTask, deleteTask, getTaskById, assignUserToTask, removeUserFromTask } from '../controllers/taskController.js';
-import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/adminController.js';
-import { getBoards, createBoard, updateBoard, deleteBoard } from '../controllers/boardController.js';
-import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controllers/userController.js';
+import { getTask, createTask, updateTask, deleteTask, getTaskById, getTasksByBoardId, assignUserToTask, removeUserFromTask } from '../controllers/task.js';
+import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/admin.js';
+import { getBoards, createBoard, updateBoard, deleteBoard } from '../controllers/board.js';
+import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controllers/user.js';
 
 const router = express.Router();
 
 router.get('/tasks', getTask);
+router.get('/tasks/:id', getTaskById);
 router.post('/tasks', createTask);
 router.put('/tasks/:id', updateTask);
 router.delete('/tasks/:id', deleteTask);
-router.get('/tasks/:id', getTaskById);
-router.patch('/tasks/:id/assignUser', assignUserToTask);
-router.patch('/tasks/:id/removeUser', removeUserFromTask);
+router.get('/tasks/:boardId/taskByBoard', getTasksByBoardId);
+router.patch('/tasks/assignUser/:id/:devId', assignUserToTask);
+router.patch('/tasks/removeUser/:id/:devId', removeUserFromTask);
 
 
 router.get('/admins', getAdmins);

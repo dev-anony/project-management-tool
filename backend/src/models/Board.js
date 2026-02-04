@@ -18,7 +18,7 @@ const boardSchema = new mongoose.Schema(
     },
     boardId: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
     project: {
