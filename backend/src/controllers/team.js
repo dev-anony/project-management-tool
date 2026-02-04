@@ -1,4 +1,5 @@
 import team from '../models/Team.js';
+import user from '../models/Users.js';
 
 export const getTeams = async (req, res) => {
     try {
@@ -52,6 +53,56 @@ export const getTeamsByCol = async (req, res) => {
     try {
         const teams = await team.find({ col: col });
         res.status(200).json(teams);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+export const getTeamByDevId = async (req, res) => {
+    const { devId } = req.params;
+    try {
+        const teams = await team.find({ dev: devId });
+        res.status(200).json(teams);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+export const assignDevToTeam = async (req, res) => {
+    const { id, devId } = req.params;
+
+    const devExists = await team.findOne({ _id: id, dev: devId });
+    if (devExists) {
+        return res.status(404).json({ message: 'Developer already assigned to team' });
+    }
+
+    try {
+        const updatedTeam = await team.findByIdAndUpdate(
+            id,
+            { $addToSet: { dev: devId } },
+            { new: true }
+        );
+        res.status(200).json(updatedTeam);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+export const removeDevFromTeam = async (req, res) => {
+    const { id, devId } = req.params;
+
+    const devExists = await team.findOne({ _id: id, dev: devId });
+    if (!devExists) {
+        return res.status(404).json({ message: 'Developer not found in team' });
+    }
+
+    try {
+        const updatedTeam = await team.findByIdAndUpdate(   
+            id,
+            { $pull: { dev: devId } },
+            { new: true }
+        );
+        res.status(200).json(updatedTeam);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
