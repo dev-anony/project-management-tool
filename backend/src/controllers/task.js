@@ -79,8 +79,6 @@ export async function getTasksByBoardId(req, res) {
     }
 }
 
-//unable to assign
-
 export async function assignUserToTask(req, res) {
     try {
         const { id: taskId, devId } = req.params;

@@ -1,5 +1,6 @@
 import team from '../models/Team.js';
-import user from '../models/Users.js';
+import dev from '../models/Users.js';
+import mongoose from 'mongoose';
 
 export const getTeams = async (req, res) => {
     try {
@@ -11,8 +12,8 @@ export const getTeams = async (req, res) => {
 };
 
 export const createTeam = async (req, res) => {
-    const teamData = req.body;
-    const newTeam = new team(teamData);
+    const { name, dev, col } = req.body;
+    const newTeam = new team({ name, dev, col });
     try {
         await newTeam.save();
         res.status(201).json(newTeam);
@@ -23,19 +24,23 @@ export const createTeam = async (req, res) => {
 
 export const updateTeam = async (req, res) => {
     const { id } = req.params;
-    const teamData = req.body;  
+    const { name, dev, col } = req.body;  
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No team with id: ${id}`);
 
-    const updatedTeam = await team.findByIdAndUpdate(id, teamData, { new: true });
+    const updatedTeam = await team.findByIdAndUpdate(id, { name, dev, col }, { new: true });
 
     res.json(updatedTeam);
 };
 
 export const deleteTeam = async (req, res) => {
     const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No team with id: ${id}`);
-    await team.findByIdAndRemove(id);
-    res.json({ message: "Team deleted successfully." });
+    
+    try {
+        await team.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Team deleted successfully.' });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 };
 
 export const getTeamById = async (req, res) => {

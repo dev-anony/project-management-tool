@@ -3,6 +3,8 @@ import { getTask, createTask, updateTask, deleteTask, getTaskById, getTasksByBoa
 import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/admin.js';
 import { getBoards, createBoard, updateBoard, deleteBoard } from '../controllers/board.js';
 import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controllers/user.js';
+import { getTeams } from '../controllers/team.js';
+
 
 const router = express.Router();
 
@@ -31,5 +33,17 @@ router.get('/users/:id', getUserById);
 router.post('/users', createUser);
 router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
+
+const teamController = await import('../controllers/team.js');
+
+router.get('/teams', teamController.getTeams);
+router.post('/teams', teamController.createTeam);
+router.put('/teams/:id', teamController.updateTeam);
+router.delete('/teams/:id', teamController.deleteTeam);
+router.get('/teams/:id', teamController.getTeamById);
+router.get('/teams/col/:col', teamController.getTeamsByCol);
+router.get('/teams/dev/:devId', teamController.getTeamByDevId);
+router.patch('/teams/assignDev/:id/:devId', teamController.assignDevToTeam);
+router.patch('/teams/removeDev/:id/:devId', teamController.removeDevFromTeam);
 
 export default router;
