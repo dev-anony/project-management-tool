@@ -1,30 +1,29 @@
 import mongoose from "mongoose";
 
-/*
-board:
-{
-  id: "insert here",
-  name : "Nishant",
-  dev: ["dev id"]
-  col: [colid,colid]
-}
-*/
-
 const boardSchema = new mongoose.Schema(
   {
     boardName: {
         type: String,
         required: true,
     },
-    boardId: {
-        type: String,
-        required: false,
-        unique: true,
-    },
     project: {
         type: String,
         required: true,
     },
+    devs: {
+        type: [
+            { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+        ],
+        default: [],
+        required: true,
+    },
+    cols: {
+        type: [
+            { type: mongoose.Schema.Types.ObjectId, ref: "Column" }
+        ],
+        default: [],
+        required: false,
+    }
   },
   { timestamps: true }
 );

@@ -10,8 +10,8 @@ export const getBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
-  const { boardName, boardId, project } = req.body;
-  const newBoard = new Board({ boardName, boardId, project }); 
+  const { boardName, project, devs, cols } = req.body;
+  const newBoard = new Board({ boardName, project, devs, cols }); 
   try {
     await newBoard.save();
     res.status(201).json(newBoard);
@@ -22,11 +22,11 @@ export const createBoard = async (req, res) => {
 
 export const updateBoard = async (req, res) => {
     const { id } = req.params;
-    const { boardName, boardId, project } = req.body;
+    const { boardName, project, devs, cols } = req.body;
     try {
       const updatedBoard = await Board.findByIdAndUpdate(
         id,
-        { boardName, boardId, project },
+        { boardName, project, devs, cols },
         { new: true }
       );
         if (!updatedBoard) {
@@ -49,4 +49,33 @@ export const deleteBoard = async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
+};
+
+export const addDevToBoard = async (boardId, devId) => {
+    try {
+        const board = await Board.findById(boardId);
+
+        if (!board) {
+            throw new Error('Board not found');
+        }
+        if (!board.devs.includes(devId)) {
+            board.devs.push(devId);
+            await board.save();
+        }
+    } catch (error) {
+        throw new Error(`Error adding dev to board: ${error.message}`);
+    }
+};
+
+export const removeDevFromBoard = async (boardId, devId) => {
+    try {
+        const board = await Board.findById(boardId);
+        if (!board) {
+            throw new Error('Board not found');
+        }
+        board.devs = board.devs.filter(id => id.toString() !== devId);
+        await board.save();
+    } catch (error) {
+        throw new Error(`Error removing dev from board: ${error.message}`);
+    } 
 };

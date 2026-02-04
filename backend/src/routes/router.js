@@ -3,7 +3,6 @@ import { getTask, createTask, updateTask, deleteTask, getTaskById, getTasksByBoa
 import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/admin.js';
 import { getBoards, createBoard, updateBoard, deleteBoard } from '../controllers/board.js';
 import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controllers/user.js';
-import { getTeams } from '../controllers/team.js';
 
 
 const router = express.Router();
@@ -47,3 +46,6 @@ router.patch('/teams/assignDev/:id/:devId', teamController.assignDevToTeam);
 router.patch('/teams/removeDev/:id/:devId', teamController.removeDevFromTeam);
 
 export default router;
+
+//might create an issue while updating things.
+// requires to $addtoset or $pull
