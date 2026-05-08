@@ -1,4 +1,5 @@
 import Dev from '../models/Users.js';
+import Board from '../models/Board.js';
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -62,4 +63,45 @@ export const deleteUser = async (req, res) => {
       res.status(500).json({ message: 'Error deleting user', error });
     }
 };
+
+export const removeDevFromBoards = async (req, res) => {
+    try {
+    const { adminId, devId, boardId } = req.body;
+
+    // check admin exists
+    const admin = await User.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({
+        message: 'Admin not found'
+      });
+    }
+
+    // verify admin permission
+    if (!admin.isAdmin) {
+      return res.status(403).json({
+        message: 'Access denied'
+      });
+    }
+
+    // remove developer from board
+    const updatedBoard = await Board.findByIdAndUpdate(
+      boardId,
+      {
+        $pull: {
+          developers: devId
+        }
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      board: updatedBoard
+    });
+    } catch (error) {
+        console.error('Error removing dev from boards:', error);
+    }
+};
+
 

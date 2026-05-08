@@ -45,6 +45,14 @@ router.get('/teams/dev/:devId', teamController.getTeamByDevId);
 router.patch('/teams/assignDev/:id/:devId', teamController.assignDevToTeam);
 router.patch('/teams/removeDev/:id/:devId', teamController.removeDevFromTeam);
 
+const colController = await import('../controllers/column.js');
+
+router.get('/columns', colController.getColumns);
+router.post('/columns', colController.createColumn);
+router.put('/columns/:id', colController.updateColumn);
+router.delete('/columns/:id', colController.deleteColumn);
+router.get('/columns/:id', colController.getColumnById);
+
 export default router;
 
 //might create an issue while updating things.

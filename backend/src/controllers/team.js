@@ -12,8 +12,8 @@ export const getTeams = async (req, res) => {
 };
 
 export const createTeam = async (req, res) => {
-    const { name, dev, col } = req.body;
-    const newTeam = new team({ name, dev, col });
+    const { team_name, dev, col } = req.body;
+    const newTeam = new team({ team_name, dev, col });
     try {
         await newTeam.save();
         res.status(201).json(newTeam);

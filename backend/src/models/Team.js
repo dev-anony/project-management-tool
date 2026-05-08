@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const teamSchema = new mongoose.Schema(
   {
-    name: {
+    team_name: {
         type: String,
         required: true,
     },
@@ -16,8 +16,7 @@ const teamSchema = new mongoose.Schema(
         default: []
     },
     col: {
-        type: [String],
-        required: true,
+        type: [String]
     }
 },
 );
