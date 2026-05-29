@@ -10,18 +10,28 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
         unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    lastLogin: {
+        type: Date,
+    },
+    resetPasswordToken: {
+        type: String,
+    },
+    resetPasswordExpires: {
+        type: Date,
+    },
+    verificationToken: {
+        type: String,
+    },
+    verificationExpires: {
+        type: Date,
     }
 },
 );
 
 const User = mongoose.model("User", userSchema);
 export default User;
-
-/* team:
-
-{
-    id: "insert here",
-    dev :  ["123654", "1654654"],
-    col:  []
-}
-*/
