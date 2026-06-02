@@ -1,8 +1,6 @@
 import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
 
-
-
 export async function signup(req, res) {
     const { name, email, password } = req.body;
 
@@ -17,17 +15,27 @@ export async function signup(req, res) {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        const verificationToken = Math.floor(100000 + Math.random() * 900000).toString(); // Simple 6-digit token
 
         const newUser = new User({
             name,
             email,
             password: hashedPassword,
+            verificationToken,
+            verificationExpires: Date.now() + 24 * 60 * 60 * 1000, // Token valid for 1 hour
         });
 
         await newUser.save();
 
-        res.status(201).json({ success: true, message: "User registered successfully" });
-        
+        //jwt 
+        generateTokenAndSetCookie(newUser._id, res); 
+
+        res.status(201).json({ success: true, message: "User registered successfully", user: {
+            ...newUser._doc,
+            password: undefined, // Exclude password from response
+            verificationToken: undefined, // Exclude verification token from response
+        } });
+
     }
     catch (error) {
         console.error("Error during signup:", error);
