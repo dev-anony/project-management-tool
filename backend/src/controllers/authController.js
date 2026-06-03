@@ -1,5 +1,6 @@
 import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
+import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
 export async function signup(req, res) {
     const { name, email, password } = req.body;
@@ -41,8 +42,6 @@ export async function signup(req, res) {
         console.error("Error during signup:", error);
         res.status(500).json({ success: false, message: "Server error during signup" });
     }
-
-    res.send("Signup route");
 }
 export async function login(req, res) {
     res.send("Login route");

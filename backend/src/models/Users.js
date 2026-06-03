@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
     },
     lastLogin: {
         type: Date,
+        default: Date.now,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
     },
     resetPasswordToken: {
         type: String,
@@ -31,6 +36,7 @@ const userSchema = new mongoose.Schema(
         type: Date,
     }
 },
+{ timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
