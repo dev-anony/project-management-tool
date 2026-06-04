@@ -15,7 +15,7 @@ const sender = {
 };
 const recipients = [
   {
-    email: "tyz31935@gmail.com",
+    email: process.env.MAIL,
   }
 ];
 
