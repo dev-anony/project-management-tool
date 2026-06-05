@@ -46,6 +46,30 @@ export async function signup(req, res) {
         res.status(500).json({ success: false, message: "Server error during signup" });
     }
 }
+
+export async function verifyEmail(req, res) {
+    const { code } = req.body;
+    try {
+        const user = await User.findOne({
+            verificationToken: code,
+            verificationExpires: { $gt: Date.now() },
+        });
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+        }
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        user.verificationExpires = undefined;
+        await user.save();
+
+        res.json({ success: true, message: "Email verified successfully" });
+    }
+    catch (error) {
+        console.error("Error during email verification:", error);
+        res.status(500).json({ success: false, message: "Server error during email verification" });
+    }
+}
+
 export async function login(req, res) {
     res.send("Login route");
 }
@@ -53,4 +77,3 @@ export async function login(req, res) {
 export async function logout(req, res) {
     res.send("Logout route");
 }
-
