@@ -184,7 +184,7 @@ const KanbanBoard = () => {
 
   return (
     <div className="flex h-[410px] overflow-auto pr-6 pl-6 pt-10
-     items-start">
+     items-start no-scrollbar">
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
