@@ -16,8 +16,8 @@ function BoardPage2() {
 
 
   return (
-    <div className="h-screen w-screen">
-      <div className="">
+    <div className="h-screen flex flex-col">
+      <div className="h-16 shrink-0">
         <Header 
           title={title}
           powerUps={powerUps}
@@ -26,11 +26,19 @@ function BoardPage2() {
           onTitleChange={(newTitle) => setTitle(newTitle)}
         />
       </div>
-      <div
-      className="h-[calc(100vh-64px)] w-full">
-        <BoardCanvas />
+
+      <div className="flex flex-1 overflow-hidden">
+
+        <div className="">
+        </div>
+
+        <div className="flex-1 relative absolute bottom-0">
+          <BoardCanvas />
+        </div>
+
       </div>
     </div>
   );
 }
 export default BoardPage2;
+

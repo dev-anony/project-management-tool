@@ -45,9 +45,6 @@ const KanbanBoard = () => {
 
   //create New, Delete, Update column
 
-  function addNewColumn() {
-  };
-
   function createNewColumn() {
     const id = generateId();
     
@@ -186,8 +183,7 @@ const KanbanBoard = () => {
   }
 
   return (
-    <div className="ml-5 flex flex-col h-full 
-    position-relative flex-1 overflow-auto pr-6 pl-6 pt-2
+    <div className="ml-5 flexflex-1 overflow-auto pr-6 pl-6 pt-2
     pb-40 items-start no-scrollbar">
       <DndContext
         sensors={sensors}
@@ -195,7 +191,7 @@ const KanbanBoard = () => {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="flex gap-6 h-full items-center">
+        <div className="flex gap-6 items-center">
           <div className="flex gap-4 items-start">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
@@ -212,16 +208,17 @@ const KanbanBoard = () => {
               ))}
             </SortableContext>
           </div>
-
-          <button
-            onClick={createNewColumn}
-            className="min-w-[200px] h-[250px] flex items-center 
-            justify-center gap-2  text-black rounded font-semibold
-            ring-indigo-500 hover:ring-2 cursor-pointer"
-          >
-          <PlusIcon />
-            Add New List
-          </button>
+          <div className="w-[200px] h-[350px] items-center flex">
+            <button
+              onClick={createNewColumn}
+              className="min-w-[200px] h-[250px] flex items-center
+              justify-center gap-2  text-black rounded font-semibold
+              ring-indigo-500 hover:ring-2 cursor-pointer"
+            >
+            <PlusIcon />
+              Add New List
+            </button>
+          </div>
         </div>
 
         {createPortal(

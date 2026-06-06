@@ -27,12 +27,14 @@ function Icon({ children, className = 'w-5 h-5' }) {
 
 export default function BoardHeader({
     title = 'Board title',
+    search = 'Search...',
     //members = [],
     powerUps = [],
     //onShare = () => {},
     onOpenMenu = () => {},
     onDashBoard = () => {},
     onTitleChange = () => {},
+    setSearch = () => {},
     className = ''
   }) 
 {
@@ -65,6 +67,15 @@ export default function BoardHeader({
               value={title}
               onChange={(e) => onTitleChange?.(e.target.value)}
               aria-label="Board name input"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              aria-label="search input"
             />
           </div>
         </div>
