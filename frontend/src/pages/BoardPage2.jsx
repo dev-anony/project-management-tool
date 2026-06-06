@@ -4,6 +4,7 @@ import Header from "../components/Board/Header";
 
 function BoardPage2() {
   const [title, setTitle] = useState("My Board");
+  const [search, setSearch] = useState("search");
 
   /*const members = [
     { id: 1, name: "u1", username: "u1", initials: "A", avatarUrl: "", isAdmin: true },
@@ -16,26 +17,20 @@ function BoardPage2() {
 
 
   return (
-    <div className="h-screen flex flex-col">
-      <div className="h-16 shrink-0">
-        <Header 
-          title={title}
-          powerUps={powerUps}
-          onOpenMenu={() => alert("Menu opened")}
-          onDashBoard={() => alert("Go to Dashboard")}
-          onTitleChange={(newTitle) => setTitle(newTitle)}
-        />
-      </div>
-
-      <div className="flex flex-1 overflow-hidden">
-
-        <div className="">
-        </div>
-
-        <div className="flex-1 relative absolute bottom-0">
-          <BoardCanvas />
-        </div>
-
+    <div className="h-screen w-screen">
+      <Header 
+        title={title}
+        powerUps={powerUps}
+        onOpenMenu={() => alert("Menu opened")}
+        onDashBoard={() => alert("Go to Dashboard")}
+        onTitleChange={(newTitle) => setTitle(newTitle)}
+        search={search}
+        setSearch={(newSearch) => setSearch(newSearch)}
+        className="items-start"
+      />
+  
+      <div className="h-[410px] w-full absolute bottom-0">
+        <BoardCanvas />
       </div>
     </div>
   );
