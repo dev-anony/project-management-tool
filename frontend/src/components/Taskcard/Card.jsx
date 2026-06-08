@@ -48,14 +48,14 @@ const HoverTooltip = ({ description }) => (
 
 // ── TaskCard ──────────────────────────────────────────────────────────────────
 const TaskCard = ({ task, deleteTask, updateTask }) => {
-  const [modalOpen, setModal]   = useState(false);
-  const [hovered,   setHovered] = useState(false);
+  const [modalOpen, setModal] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
-  const [labels,      setLabels]      = useState(task.labels      || []);
-  const [cover,       setCover]       = useState(task.cover       || null);
-  const [dueDate,     setDueDate]     = useState(task.dueDate     || null);
-  const [members,     setMembers]     = useState(task.members     || []);
-  const [checklist,   setChecklist]   = useState(task.checklist   || []);
+  const [labels, setLabels] = useState(task.labels || []);
+  const [cover, setCover] = useState(task.cover || null);
+  const [dueDate, setDueDate] = useState(task.dueDate || null);
+  const [members, setMembers] = useState(task.members || []);
+  const [checklist, setChecklist] = useState(task.checklist || []);
   const [description, setDescription] = useState(task.description || "");
 
   const sync = patch => updateTask && updateTask(task.id, patch);
@@ -165,17 +165,17 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
       {modalOpen && (
         <CardModal
           task={task}
-          labels={labels}         cover={cover}     dueDate={dueDate}
-          members={members}       checklist={checklist}
+          labels={labels} cover={cover} dueDate={dueDate}
+          members={members} checklist={checklist}
           description={description}
           onClose={() => setModal(false)}
-          onUpdateContent={v      => sync(v)}
-          onLabels={v             => { setLabels(v);      sync({ labels: v });      }}
-          onCover={v              => { setCover(v);       sync({ cover: v });       }}
-          onDueDate={v            => { setDueDate(v);     sync({ dueDate: v });     }}
-          onMembers={v            => { setMembers(v);     sync({ members: v });     }}
-          onChecklist={v          => { setChecklist(v);   sync({ checklist: v });   }}
-          onDescription={v        => { setDescription(v); sync({ description: v }); }}
+          onUpdateContent={v => sync(v)}
+          onLabels={v => { setLabels(v); sync({ labels: v }); }}
+          onCover={v => { setCover(v); sync({ cover: v }); }}
+          onDueDate={v => { setDueDate(v); sync({ dueDate: v });     }}
+          onMembers={v => { setMembers(v); sync({ members: v });     }}
+          onChecklist={v => { setChecklist(v); sync({ checklist: v });   }}
+          onDescription={v => { setDescription(v); sync({ description: v }); }}
           onDelete={() => deleteTask && deleteTask(task.id)}
         />
       )}
