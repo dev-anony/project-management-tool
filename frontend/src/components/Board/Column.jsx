@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useDroppable } from "@dnd-kit/core";
 import PlusIcon from "../../utils/PlusIcon";
 import TaskCard from "./Card2";
+import TaskCard2 from "../Taskcard/Card";
 
 const ColumnContainer = ({
   column,
@@ -128,7 +129,7 @@ const ColumnContainer = ({
       >
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
-            <TaskCard
+            <TaskCard2
               key={task.id}
               task={task}
               deleteTask={deleteTask}
