@@ -129,7 +129,7 @@ const ColumnContainer = ({
       >
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
-            <TaskCard2
+            <TaskCard
               key={task.id}
               task={task}
               deleteTask={deleteTask}
