@@ -346,7 +346,7 @@ const CardModal = ({
                 className="w-full text-[#172b4d] border-2 border-[#0079bf] 
                 rounded px-[6px] py-1 resize-none font-[inherit] leading-[1.4] bg-white min-h-[60px]"
               />
-              
+
             ) : (
               <h2
                 onClick={() => setEdit(true)}
@@ -578,17 +578,17 @@ const CardModal = ({
           <div className="w-[168px] shrink-0 flex flex-col gap-[6px]">
             {panel ? (
               <div className="bg-white rounded-lg p-3 shadow-[0_2px_8px_rgba(0,0,0,.1)]">
-                {panel === "label"     && (
-                  <LabelPanel     labels={labels}       onLabels={handleLabels}       onBack={back} />
+                {panel === "label" && (
+                  <LabelPanel labels={labels} onLabels={handleLabels} onBack={back} />
                 )}
-                {panel === "cover"     && (
-                  <CoverPanel     cover={cover}         onCover={handleCover}         onBack={back} />
+                {panel === "cover" && (
+                  <CoverPanel cover={cover} onCover={handleCover} onBack={back} />
                 )}
-                {panel === "date"      && (
-                  <DueDatePanel   dueDate={dueDate}     onDueDate={handleDueDate}     onBack={back} />
+                {panel === "date" && (
+                  <DueDatePanel dueDate={dueDate} onDueDate={handleDueDate} onBack={back} />
                 )}
-                {panel === "members"   && (
-                  <MembersPanel   members={members}     onMembers={handleMembers}     onBack={back} />
+                {panel === "members" && (
+                  <MembersPanel members={members} onMembers={handleMembers} onBack={back} />
                 )}
                 {panel === "checklist" && (
                   <ChecklistPanel checklist={checklist} onChecklist={handleChecklist} onBack={back} />
