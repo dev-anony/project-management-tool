@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
-import TaskCard from "./Card2";
+import TaskCard from "../Taskcard/Card";
 import debounce from "lodash.debounce";
 
 const KanbanBoard = () => {

@@ -4,6 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
 
 const TaskCard = ({ task, deleteTask, updateTask }) => {
+  const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
@@ -66,6 +67,8 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
   return (
     <div
       onClick={toggleEditMode}
+      onMouseEnter={() => setMouseIsOver(true)}
+      onMouseLeave={() => setMouseIsOver(false)}
       {...attributes}
       {...listeners}
       ref={setNodeRef}
@@ -81,7 +84,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         {" "}
         {task.content}
       </p>
-      
+      {mouseIsOver && (
         <button
           onClick={() => {
             deleteTask(task.id);
@@ -91,6 +94,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         >
           <TrashIcon />
         </button>
+      )}
     </div>
   );
 };
