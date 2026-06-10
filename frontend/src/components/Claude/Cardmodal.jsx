@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import Icon from "./CardIcons";
+import Icon from "../../utils/CardIcons";
 import {
   MEMBER_COLORS,
   LABEL_COLORS,

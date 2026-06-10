@@ -4,7 +4,8 @@ import { useSortable, SortableContext } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useDroppable } from "@dnd-kit/core";
 import PlusIcon from "../../utils/PlusIcon";
-import TaskCard from "../Taskcard/Card";
+import TaskCard2 from "../Taskcard/Card";
+import TaskCard from "../Claude/Card";
 
 const ColumnContainer = ({
   column,

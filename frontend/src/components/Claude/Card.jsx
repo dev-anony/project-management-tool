@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import Icon from "./CardIcons";
+import Icon from "../../utils/CardIcons";
 import CardModal from "./CardModal";
 import { LABEL_COLORS, MEMBER_COLORS, fmt, overdue } from "./cardConstants";
 
