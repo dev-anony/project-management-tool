@@ -1,5 +1,16 @@
 import express from 'express';
-import { getTask, createTask, updateTask, deleteTask, getTaskById, getTasksByBoardId, assignUserToTask, removeUserFromTask } from '../controllers/task.js';
+import { 
+    getTask, 
+    createTask, 
+    updateTask, 
+    deleteTask, 
+    patchTask,
+    getTaskById, 
+    getTasksByBoardId, 
+    assignUserToTask, 
+    removeUserFromTask 
+} from '../controllers/task.js';
+
 import { getAdmins, createAdmin, updateAdmin, deleteAdmin } from '../controllers/admin.js';
 import { getBoards, createBoard, updateBoard, deleteBoard } from '../controllers/board.js';
 import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../controllers/user.js';
@@ -11,6 +22,8 @@ router.get('/tasks', getTask);
 router.get('/tasks/:id', getTaskById);
 router.post('/tasks', createTask);
 router.put('/tasks/:id', updateTask);
+router.patch ('/tasks/:id',patchTask);        
+// partial update (labels / cover / dueDate / members / checklist / description / content)
 router.delete('/tasks/:id', deleteTask);
 router.get('/tasks/:boardId/taskByBoard', getTasksByBoardId);
 router.patch('/tasks/assignUser/:id/:devId', assignUserToTask);
@@ -57,3 +70,21 @@ export default router;
 
 //might create an issue while updating things.
 // requires to $addtoset or $pull
+
+/*
+  patchTask controller (implement in controllers/task.js):
+  ─────────────────────────────────────────────────────────
+  export const patchTask = async (req, res) => {
+    try {
+      const task = await Task.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },   // only updates fields that are sent
+        { new: true }
+      );
+      if (!task) return res.status(404).json({ message: "Task not found" });
+      res.json(task);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+*/
