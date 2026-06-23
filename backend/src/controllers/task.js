@@ -61,6 +61,20 @@ export async function deleteTask(req, res) {
     }
 }
 
+export const patchTask = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },  // only updates the fields you send, leaves the rest alone
+      { new: true }
+    );
+    if (!task) return res.status(404).json({ message: "Task not found" });
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export async function getTasksByBoardId(req, res) {
     try {
         const { boardId } = req.params;
