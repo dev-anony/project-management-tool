@@ -27,27 +27,20 @@ const KanbanBoard = () => {
     })
   );
 
-  // ID for each Column and Task will be unique for both.
-
   const generateId = (() => {
-  const used = new Set();
-
-  return function() {
-    let id;
-    do {
-      id = Math.floor(Math.random() * 1000) + 1;
-    } while (used.has(id));
-
-    used.add(id);
-    return id;
-  };
-})();
-
-  //create New, Delete, Update column
+    const used = new Set();
+    return function () {
+      let id;
+      do {
+        id = Math.floor(Math.random() * 1000) + 1;
+      } while (used.has(id));
+      used.add(id);
+      return id;
+    };
+  })();
 
   function createNewColumn() {
     const id = generateId();
-    
     const columnToAdd = {
       id,
       title: `[${id}] ${columns.length + 1}`,
@@ -58,7 +51,6 @@ const KanbanBoard = () => {
   function deleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
     setColumns(filteredColumns);
-
     const newTasks = tasks.filter((t) => t.columnId !== id);
     setTasks(newTasks);
   }
@@ -71,11 +63,8 @@ const KanbanBoard = () => {
     setColumns(newColumns);
   }
 
-  //Create, Delete, Update Task
-
   function createTask(columnId) {
     const id = generateId();
-
     const newTask = {
       id,
       columnId,
@@ -97,8 +86,6 @@ const KanbanBoard = () => {
     setTasks(newTasks);
   }
 
-  //DND Handlers
-
   function onDragStart(event) {
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
@@ -113,11 +100,8 @@ const KanbanBoard = () => {
   function onDragEnd(event) {
     setActiveColumn(null);
     setActiveTask(null);
-
     const { active, over } = event;
     if (!over) return;
-
-    // Only reorder columns when both active and over are columns
     if (
       active.data.current?.type === "Column" &&
       over.data.current?.type === "Column"
@@ -125,7 +109,6 @@ const KanbanBoard = () => {
       const activeColumnId = active.id;
       const overColumnId = over.id;
       if (activeColumnId === overColumnId) return;
-
       setColumns((columns) => {
         const activeColumnIndex = columns.findIndex((col) => col.id === activeColumnId);
         const overColumnIndex = columns.findIndex((col) => col.id === overColumnId);
@@ -134,25 +117,18 @@ const KanbanBoard = () => {
     }
   }
 
-  //Debounced onDragOver handler to improve performance
-
   const debouncedOnDragOver = useMemo(
     () =>
       debounce((event) => {
         const { active, over } = event;
         if (!over) return;
-
         const activeId = active.id;
         const overId = over.id;
         if (activeId === overId) return;
-
         const isActiveATask = active.data.current?.type === "Task";
         const isOverATask = over.data.current?.type === "Task";
         const isOverAColumn = over.data.current?.type === "ColumnContent";
-
         if (!isActiveATask) return;
-
-        // Dropping a task over another task
         if (isActiveATask && isOverATask) {
           setTasks((tasks) => {
             const activeIndex = tasks.findIndex((t) => t.id === activeId);
@@ -161,12 +137,9 @@ const KanbanBoard = () => {
             return arrayMove(tasks, activeIndex, overIndex);
           });
         }
-
-        // Dropping a task over a column
         if (isActiveATask && isOverAColumn) {
           setTasks((tasks) => {
             const activeIndex = tasks.findIndex((t) => t.id === activeId);
-            // overId is droppable id for column content, read column id from over.data
             const targetColumnId = over.data.current?.column?.id ?? null;
             if (targetColumnId) {
               tasks[activeIndex].columnId = targetColumnId;
@@ -175,7 +148,7 @@ const KanbanBoard = () => {
           });
         }
       }, 20),
-    [],
+    []
   );
 
   function onDragOver(event) {
@@ -183,15 +156,17 @@ const KanbanBoard = () => {
   }
 
   return (
-    <div className="flex h-[400px] overflow-auto pr-6 pl-6 pt-7 bg-gray-100
-     items-start no-scrollbar">
+    <div
+      className="flex h-[400px] overflow-auto pr-6 pl-6 pt-6 no-scrollbar items-start"
+      style={{ background: "#f0f2f5" }}
+    >
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-5 items-center">
           <div className="flex gap-4 items-start">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
@@ -208,15 +183,32 @@ const KanbanBoard = () => {
               ))}
             </SortableContext>
           </div>
-          <div className="w-[200px] h-[350px] items-center flex">
+
+          {/* Add List button */}
+          <div className="w-[220px] h-[350px] flex items-center">
             <button
               onClick={createNewColumn}
-              className="min-w-[200px] h-[250px] flex items-center
-              justify-center gap-2  text-black rounded font-semibold
-              ring-indigo-500 hover:ring-2 cursor-pointer"
+              className="min-w-[220px] h-[52px] flex items-center justify-center gap-2
+                rounded-xl font-medium text-sm cursor-pointer
+                transition-all duration-150"
+              style={{
+                background: "rgba(255,255,255,0.72)",
+                color: "#374151",
+                border: "1.5px dashed #c7ccd6",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.95)";
+                e.currentTarget.style.borderColor = "#818cf8";
+                e.currentTarget.style.color = "#4f46e5";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.72)";
+                e.currentTarget.style.borderColor = "#c7ccd6";
+                e.currentTarget.style.color = "#374151";
+              }}
             >
-            <PlusIcon />
-              Add New List
+              <PlusIcon />
+              Add new list
             </button>
           </div>
         </div>
@@ -229,9 +221,7 @@ const KanbanBoard = () => {
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
                 createTask={createTask}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id
-                )}
+                tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 deleteTask={deleteTask}
                 updateTask={updateTask}
               />

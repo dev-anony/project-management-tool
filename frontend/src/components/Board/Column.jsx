@@ -4,7 +4,6 @@ import { useSortable, SortableContext } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useDroppable } from "@dnd-kit/core";
 import PlusIcon from "../../utils/PlusIcon";
-import TaskCard2 from "../Taskcard/Card";
 import TaskCard from "../Claude/Card";
 
 const ColumnContainer = ({
@@ -19,11 +18,7 @@ const ColumnContainer = ({
   const [editMode, setEditMode] = useState(false);
   const [mouseIsOver, setMouseIsOver] = useState(false);
 
-  // Memoize task IDs for SortableContext
-
-  const tasksIds = useMemo(() => {
-    return tasks.map((task) => task.id);
-  }, [tasks]);
+  const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
@@ -31,8 +26,6 @@ const ColumnContainer = ({
       data: { type: "Column", column },
       disabled: editMode,
     });
-
-    // Droppable area for tasks within the column
 
   const { setNodeRef: setDroppableNodeRef } = useDroppable({
     id: `column-content-${column.id}`,
@@ -48,84 +41,155 @@ const ColumnContainer = ({
     return (
       <div
         ref={setNodeRef}
-        style={style}
-        className="bg-mainBackgroundColor opacity-50 p-2.5 w-[250px] h-[350px]
-        items-center flex flex-left rounded border-2
-        border-rose-500 cursor-grab relative"
-      ></div>
+        style={{
+          ...style,
+          width: 260,
+          height: 350,
+          borderRadius: 12,
+          background: "#e0e7ff",
+          opacity: 0.45,
+          border: "2px dashed #818cf8",
+        }}
+      />
     );
   }
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
-      className="bg-columnBackgroundColor w-[250px] h-[350px] 
-      rounded flex flex-col min-h-0"
+      style={{
+        ...style,
+        width: 260,
+        height: 350,
+        borderRadius: 12,
+        background: "#ffffff",
+        boxShadow: "0 1px 4px rgba(15,23,42,0.07), 0 0 0 1px rgba(15,23,42,0.05)",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
     >
-      {/* height issue above (max-h-[350px]) while dragging */}
-      {/* Column Title */}
+      {/* Column header */}
       <div
         {...attributes}
         {...listeners}
-        onClick={() => {
-          setEditMode(true);
-        }}
+        onClick={() => setEditMode(true)}
         style={{
-          border: editMode ? "2px solid #4F46E5" : "",
+          height: 48,
+          padding: "0 12px 0 14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          cursor: "grab",
+          borderBottom: "1px solid #f1f3f7",
+          borderLeft: editMode ? "3px solid #4f46e5" : "3px solid transparent",
+          background: editMode ? "#f8f9ff" : "#ffffff",
+          transition: "background 0.12s, border-left-color 0.12s",
+          flexShrink: 0,
         }}
-        className="bg-mainBackgroundColor
-        text-md font-semibold
-        h-[50px]   
-        cursor-grab
-        border-columnBackgroundColor
-        flex items-center justify-between
-        rounded bg-[#cccccc3a] p-4"
       >
-        <div>
-          {!editMode && column.title}
-          {editMode && (
+        <div style={{ flex: 1, overflow: "hidden" }}>
+          {!editMode ? (
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                color: "#1e293b",
+                letterSpacing: "0.01em",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "block",
+              }}
+            >
+              {column.title}
+            </span>
+          ) : (
             <input
               autoFocus
-              className=" w-[170px] outline-none rounded"
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
-              onBlur={() => {
-                setEditMode(false);
-              }}
+              onBlur={() => setEditMode(false)}
               onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
-                setEditMode(false);
+                if (e.key === "Enter") setEditMode(false);
+              }}
+              style={{
+                width: "100%",
+                fontSize: 13,
+                fontWeight: 600,
+                color: "#1e293b",
+                border: "none",
+                outline: "none",
+                background: "transparent",
+                letterSpacing: "0.01em",
               }}
             />
           )}
         </div>
+
+        {/* Task count badge */}
+        {tasks.length > 0 && !editMode && (
+          <span
+            style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: "#6366f1",
+              background: "#eef2ff",
+              borderRadius: 10,
+              padding: "2px 7px",
+              marginRight: 6,
+              flexShrink: 0,
+            }}
+          >
+            {tasks.length}
+          </span>
+        )}
+
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             deleteColumn(column.id);
           }}
-          className="stroke-gray-500
-          hover:stroke-white
-          ring-rose-500 hover:ring-2
-          rounded py-2 px-2"
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#94a3b8",
+            padding: "4px",
+            borderRadius: 6,
+            display: "flex",
+            alignItems: "center",
+            transition: "color 0.12s, background 0.12s",
+            flexShrink: 0,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#ef4444";
+            e.currentTarget.style.background = "#fef2f2";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#94a3b8";
+            e.currentTarget.style.background = "none";
+          }}
         >
           <TrashIcon />
         </button>
       </div>
 
-      {/* Column Task Container */}
-      {/*fix min-height issue when no tasks*/}
-      <div 
-      ref={setDroppableNodeRef}
-      className="flex-1 min-h-8 bg-[#cccccc3a]
-      flex-col p-3 overflow-y-auto no-scrollbar
-      scroll-smooth space-y-2"
-      onMouseEnter={() => {
-        setMouseIsOver(true);
-      }}
-      onMouseLeave={() => {
-        setMouseIsOver(false);
-      }} 
+      {/* Task list area */}
+      <div
+        ref={setDroppableNodeRef}
+        onMouseEnter={() => setMouseIsOver(true)}
+        onMouseLeave={() => setMouseIsOver(false)}
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "10px 10px 4px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 6,
+          scrollbarWidth: "none",
+          minHeight: 0,
+        }}
       >
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
@@ -139,28 +203,34 @@ const ColumnContainer = ({
         </SortableContext>
       </div>
 
-      {/* Column Footer */}
+      {/* Footer — Add task */}
       <button
-          onClick={() => {
-            createTask(column.id);
-          }}
-          onMouseEnter={() => {
-            setMouseIsOver(true);
-          }}
-          onMouseLeave={() => {
-            setMouseIsOver(false);
-          }}
-          className="flex ring-white
-          rounded font-normal
-          bg-[#ffffff]"
-        > 
-        <span className={`flex items-center gap-2 transition-opacity duration-150 ${
-          mouseIsOver ? "opacity-100" : "opacity-0"
-        }`}>
-          <PlusIcon />
-          Add Task
-        </span>
-        </button>
+        onClick={() => createTask(column.id)}
+        onMouseEnter={() => setMouseIsOver(true)}
+        onMouseLeave={() => setMouseIsOver(false)}
+        style={{
+          height: 36,
+          border: "none",
+          borderTop: "1px solid #f1f3f7",
+          background: mouseIsOver ? "#f8f9ff" : "#ffffff",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 6,
+          fontSize: 12,
+          fontWeight: 500,
+          color: mouseIsOver ? "#4f46e5" : "#94a3b8",
+          transition: "background 0.12s, color 0.12s",
+          flexShrink: 0,
+          borderRadius: "0 0 12px 12px",
+          padding: "0 12px",
+          opacity: mouseIsOver ? 1 : 0,
+        }}
+      >
+        <PlusIcon />
+        Add a card
+      </button>
     </div>
   );
 };
