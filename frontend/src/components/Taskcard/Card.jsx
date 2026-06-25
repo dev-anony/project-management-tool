@@ -8,7 +8,7 @@ import { LABEL_COLORS, MEMBER_COLORS, fmt, overdue } from "./cardConstants";
 const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
 
 // ── Avatar ────────────────────────────────────────────────────────────────────
-const Avatar = ({ name, size = 20 }) => {
+const Avatar = ({ name, size = 22 }) => {
   const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   const bg = MEMBER_COLORS[name.charCodeAt(0) % MEMBER_COLORS.length];
   return (
@@ -131,7 +131,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
         ref={setNodeRef}
         style={{
           ...dndStyle,
-          height: 60,
+          height: 64,
           borderRadius: 8,
           background: "#e0e7ff",
           opacity: 0.4,
@@ -144,7 +144,12 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
   return (
     <>
       <div style={{ position: "relative" }}>
+        {/*
+          data-dnd-card tells Board's pan handler that this element belongs to DnD,
+          so clicking here won't accidentally start a board pan.
+        */}
         <div
+          data-dnd-card="true"
           ref={setNodeRef}
           style={{
             ...dndStyle,
@@ -166,20 +171,20 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {/* Cover strip */}
+          {/* Cover strip — slightly taller for more visual presence */}
           {cover && (
-            <div style={{ height: 28, background: cover, borderRadius: "7px 7px 0 0" }} />
+            <div style={{ height: 34, background: cover, borderRadius: "7px 7px 0 0" }} />
           )}
 
-          <div style={{ padding: "8px 10px" }}>
-            {/* Label chips */}
+          <div style={{ padding: "10px 12px" }}>
+            {/* Label chips — a touch taller so they read as real tags */}
             {labels.length > 0 && (
               <div
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
                   gap: 4,
-                  marginBottom: 6,
+                  marginBottom: 8,
                 }}
               >
                 {labels.map((id) => {
@@ -188,9 +193,9 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                     <div
                       key={id}
                       style={{
-                        height: 6,
-                        width: 32,
-                        borderRadius: 3,
+                        height: 8,
+                        width: 36,
+                        borderRadius: 4,
                         background: c?.bg,
                       }}
                       title={c?.label}
@@ -206,7 +211,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                 fontSize: 13,
                 color: "#1e293b",
                 margin: 0,
-                lineHeight: 1.55,
+                lineHeight: 1.6,
                 wordBreak: "break-word",
                 fontWeight: 400,
               }}
@@ -222,10 +227,10 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
             {checklist.length > 0 && (
               <div
                 style={{
-                  marginTop: 8,
+                  marginTop: 10,
                   display: "flex",
                   alignItems: "center",
-                  gap: 6,
+                  gap: 7,
                 }}
               >
                 <div
@@ -259,8 +264,8 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 6,
-                  marginTop: 8,
+                  gap: 8,
+                  marginTop: 10,
                 }}
               >
                 {dueDate && (
@@ -268,9 +273,9 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 3,
+                      gap: 4,
                       fontSize: 11,
-                      padding: "2px 7px",
+                      padding: "3px 8px",
                       borderRadius: 5,
                       fontWeight: 500,
                       background: overdue(dueDate) ? "#fef2f2" : "#f0fdf4",
@@ -290,15 +295,15 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                     }}
                   >
                     {members.slice(0, 3).map((m, i) => (
-                      <div key={m} style={{ marginLeft: i ? -6 : 0 }}>
+                      <div key={m} style={{ marginLeft: i ? -7 : 0 }}>
                         <Avatar name={m} />
                       </div>
                     ))}
                     {members.length > 3 && (
                       <div
                         style={{
-                          width: 20,
-                          height: 20,
+                          width: 22,
+                          height: 22,
                           borderRadius: "50%",
                           background: "#e0e7ff",
                           fontSize: 9,
@@ -306,7 +311,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
                           alignItems: "center",
                           justifyContent: "center",
                           color: "#4f46e5",
-                          marginLeft: -6,
+                          marginLeft: -7,
                           border: "2px solid #fff",
                           fontWeight: 700,
                         }}

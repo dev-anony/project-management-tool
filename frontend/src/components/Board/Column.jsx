@@ -69,8 +69,9 @@ const ColumnContainer = ({
         overflow: "hidden",
       }}
     >
-      {/* Column header */}
+      {/* Column header — data-dnd-column-header tells the board pan handler to leave this alone */}
       <div
+        data-dnd-column-header="true"
         {...attributes}
         {...listeners}
         onClick={() => setEditMode(true)}
